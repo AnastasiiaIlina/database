@@ -1,0 +1,77 @@
+<div id="root"></div>
+
+<style>
+  /* DROPDOWN */
+  ul { 
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+</style>
+
+<script>
+  const root = document.querySelector('#root');
+
+const city = {
+  defaultValue: 'Киев',
+  $elements: {
+    wrapper: '<ul class="dropdown-wrapper"></ul>',
+    item: '<li class="dropdown-wrapper__item"></li>'
+  },
+  events: {
+    onChange: (value) => alert('Значение, которое я выбрал' + value),
+    onToggle: () => document.querySelector('ul').classList.toggle('show'),
+
+  },
+
+  data:['Киев', 'Одеса', 'Днепр', 'Львов']
+}
+
+const age = {
+  defaultValue: '1',
+  $elements: {
+    wrapper: '<ul class="dropdown-wrapper"></ul>',
+    item: '<li class="dropdown-wrapper__item"></li>'
+  },
+  events: {
+    onChange: (value) => alert('Значение, которое я выбрал' + value),
+    onToggle: () => document.querySelector('ul').classList.toggle('show'),
+
+  },
+
+  data:['1', '2', '3', '4']
+}
+
+const Dropdown = function (config) {
+  const ul = document.createElement('ul');
+  ul.classList.add('dropdown-wrapper');
+ 
+  config.data.forEach(el => {
+    const li = document.createElement('li');
+    li.classList.add('dropdown-wrapper__item');
+
+    li.textContent = el;
+    if(li.textContent === config.defaultValue) li.classList.add('default');
+    
+    ul.appendChild(li);
+  });
+
+  const p = document.createElement('p');
+  p.textContent = config.defaultValue;
+  root.appendChild(p);
+  root.appendChild(ul);
+  
+ p.addEventListener('click', function(e) { 
+   console.log(e)
+   config.events.onToggle();
+  });
+}
+
+
+
+Dropdown(city);
+Dropdown(age)
+
+</script>
